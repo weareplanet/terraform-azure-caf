@@ -146,7 +146,7 @@ locals {
     for k, v in try(var.custom_role_definitions, {}) : k => flatten([
       for assignment_type, attrs in try(v.assignable_scopes, {}) : [
         for attr in attrs : [
-          local.services_roles[assignment_type][try(attr.lz_key, var.current_landingzone_key)][attr.key].id
+          try(attr.id, local.services_roles[assignment_type][try(attr.lz_key, var.current_landingzone_key)][attr.key].id)
         ]
       ]
     ])
