@@ -24,6 +24,6 @@ resource "azurerm_role_definition" "custom_role" {
     not_data_actions = lookup(var.custom_role.permissions, "not_data_actions", [])
   }
 
-  assignable_scopes = [lookup(var.custom_role, "scope", var.subscription_primary)]
+  assignable_scopes = distinct(concat([lookup(var.custom_role, "scope", var.subscription_primary)], var.assignable_scopes))
 
 }
