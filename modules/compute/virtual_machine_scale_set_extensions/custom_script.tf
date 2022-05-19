@@ -11,7 +11,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "custom_script" {
   settings = jsonencode(
     {
       "fileUris" : local.fileuris,
-      "timestamp" : try(toint(var.extension.timestamp), 12345678)
+      "timestamp" : try(tonumber(var.extension.timestamp), 12345678)
     }
   )
 
