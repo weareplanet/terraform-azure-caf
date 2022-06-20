@@ -9,3 +9,13 @@ module "compute_instance" {
   tags                = local.tags
   global_settings     = var.global_settings
 }
+
+resource "azurerm_app_configuration_key" "kv" {
+  for_each = try(local.config_settings, {})
+
+  configuration_store_id = azurerm_app_configuration.config.id
+  key                    = each.key
+  label                  = try(each.value.label, null)
+  value                  = each.value.value
+  tags                   = local.tags
+}
