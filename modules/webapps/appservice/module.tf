@@ -61,7 +61,9 @@ resource "azurerm_app_service" "app_service" {
       use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
-
+      acr_use_managed_identity_credentials = lookup(var.settings.site_config, "acr_use_managed_identity_credentials", null)
+      //acr_user_managed_identity_client_id  = lookup(var.settings.site_config, "acr_user_managed_identity_client_id", null)
+      acr_user_managed_identity_client_id  = try(var.settings.site_config.acr_user_managed_identity_client_id, try(var.combined_objects.managed_identities[try(var.settings.site_config.acr_user_managed_identity_client_id_lz_key, var.client_config.landingzone_key)][var.settings.site_config.acr_user_managed_identity_client_id_key].client_id, null))
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
 
@@ -271,7 +273,8 @@ resource "azurerm_app_service" "app_service" {
   lifecycle {
     ignore_changes = [
       app_settings["WEBSITE_RUN_FROM_PACKAGE"],
-      site_config[0].scm_type
+      site_config[0].scm_type,
+      site_config[0].linux_fx_version # deployments are made via AZDO pipelines
     ]
   }
 }
