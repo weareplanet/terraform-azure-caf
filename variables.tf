@@ -313,6 +313,10 @@ variable "shared_services" {
   }
 }
 
+variable "var_folder_path" {
+  default = ""
+}
+
 # variable "virtual_network_gateways" {
 #   default = {}
 # }
@@ -407,5 +411,18 @@ variable "purview" {
   default = {}
 }
 variable "sentinel_watchlists" {
+  default = {}
+}
+variable "iot" {
+  description = "Configuration object - IoT"
+  default = {
+    # digital_twins_instances                 = {}
+    # digital_twins_endpoint_eventhubs                 = {}
+    # digital_twins_endpoint_eventgrids = {}
+    # digital_twins_endpoint_servicebuses = {}
+
+  }
+}
+variable "resource_provider_registration" {
   default = {}
 }
