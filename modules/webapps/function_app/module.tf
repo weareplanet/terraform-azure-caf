@@ -14,9 +14,8 @@ resource "azurerm_function_app" "function_app" {
   # WIP Added DTF related life cycles for function apps 
   lifecycle {
     ignore_changes = [ 
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"], # This property prevents from overwriting Azure Pipelines config in App Deployment Center
       app_settings["ApiBaseUrl"],
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
-      app_settings["*"],
       app_settings["Audience"],
       app_settings["RequestUri"],
       app_settings["ClientId"],
