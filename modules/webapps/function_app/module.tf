@@ -11,23 +11,12 @@ resource "azurecaf_name" "plan" {
 
 resource "azurerm_function_app" "function_app" {
   #To avoid redeploy with existing customer
-  # WIP Added DTF related life cycles for function apps 
   lifecycle {
     ignore_changes = [ 
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"], # This property prevents from overwriting Azure Pipelines config in App Deployment Center
-      app_settings["ApiBaseUrl"],
-      app_settings["Audience"],
-      app_settings["RequestUri"],
-      app_settings["ClientId"],
-      app_settings["ClientSecret"],
-      app_settings["ReportingServiceBaseUrl"],
-      app_settings["InvoiceServiceBaseUrl"],
-      app_settings["ServiceBusConnection"],
-      app_settings["WEBSITES_ENABLE_APP_SERVICE_STORAGE"],
-      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
-      app_settings["AzureWebJobs.CustomsEvents.Disabled"],
-      app_settings["AzureWebJobs.IssueFunction.Disabled"],
-      app_settings["AzureWebJobs.ValidateFunction.Disabled"],
+      # When integrating a CI/CD pipeline and expecting to run from a deployed package in Azure
+      # you must seed your app settings as part of terraform code for function app to be successfully deployed.
+      # Important Default key pairs: ("WEBSITE_RUN_FROM_PACKAGE" = "", "FUNCTIONS_WORKER_RUNTIME" = "node"
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"], 
       app_settings["FUNCTIONS_WORKER_RUNTIME"],
     ]
   }
