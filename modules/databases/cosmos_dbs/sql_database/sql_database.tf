@@ -7,8 +7,6 @@ resource "random_integer" "ri" {
 
 # Create database
 resource "azurerm_cosmosdb_sql_database" "database" {
-  #name                = format("%s-%s", var.settings.name, random_integer.ri.result)
-  #name                = var.settings.name
   name                = try(var.settings.add_rnd_num, true) == false ? var.settings.name : format("%s-%s", var.settings.name, random_integer.ri.result)
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
