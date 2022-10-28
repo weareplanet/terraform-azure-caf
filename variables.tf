@@ -277,6 +277,11 @@ variable "custom_role_definitions" {
   default     = {}
 }
 
+variable "cosmosdb_role_definitions" {
+  description = "TODO"
+  default     = {}
+}
+
 variable "role_mapping" {
   description = "Configuration object - Role mapping"
   default = {
