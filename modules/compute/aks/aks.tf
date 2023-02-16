@@ -76,7 +76,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     enable_auto_scaling           = try(var.settings.default_node_pool.enable_auto_scaling, false)
     enable_host_encryption        = try(var.settings.default_node_pool.enable_host_encryption, false)
     enable_node_public_ip         = try(var.settings.default_node_pool.enable_node_public_ip, false)
-    host_group_id                 = try(var.settings.default_node_pool.host_group_id, false)
+    host_group_id                 = try(var.settings.default_node_pool.host_group_id, null)
     fips_enabled                  = try(var.settings.default_node_pool.fips_enabled, null)
     kubelet_disk_type             = try(var.settings.default_node_pool.kubelet_disk_type, null)
     max_pods                      = try(var.settings.default_node_pool.max_pods, 30)
@@ -98,6 +98,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_count                     = try(var.settings.default_node_pool.max_count, null)
     min_count                     = try(var.settings.default_node_pool.min_count, null)
     node_count                    = try(var.settings.default_node_pool.node_count, 1)
+    zones                         = try(var.settings.default_node_pool.availability_zones, var.settings.default_node_pool.zones, null)
 
     dynamic "upgrade_settings" {
       for_each = try(var.settings.default_node_pool.upgrade_settings[*], [])
@@ -534,7 +535,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   max_count                     = try(each.value.max_count, null)
   min_count                     = try(each.value.min_count, null)
   node_count                    = try(each.value.node_count, null)
-  zones                         = try(each.value.zones, null)
+  zones                         = try(each.value.availability_zones, each.value.zones, null)
   workload_runtime              = try(each.value.workload_runtime, null)
 
   dynamic "upgrade_settings" {

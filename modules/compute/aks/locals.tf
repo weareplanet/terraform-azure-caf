@@ -16,10 +16,9 @@ locals {
   ]) : []
 
   # Legacy - kept for backward compatibility
-  user_assigned_identity_id = can(var.settings.identity.user_assigned_identity_id) ? tolist([try(
-    var.settings.identity.user_assigned_identity_id,
-    var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id
-  )]) : []
+  user_assigned_identity_id = can(var.settings.identity.user_assigned_identity_id) ? tolist([var.settings.identity.user_assigned_identity_id]) : tolist([
+    try(var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id, [])
+  ])
 
   # Merge both lists
   identity_ids = toset(flatten(concat(local.identity_id_keys, local.user_assigned_identity_id)))
