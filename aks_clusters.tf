@@ -14,6 +14,7 @@ module "aks_clusters" {
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   managed_identities  = local.combined_objects_managed_identities
+  keyvaults           = local.combined_objects_keyvaults
   settings            = each.value
   vnets               = local.combined_objects_networking
 
