@@ -63,9 +63,12 @@ module "subnets" {
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
+  private_endpoint_network_policies_enabled      = try(each.value.private_endpoint_network_policies_enabled, false)
+  private_link_service_network_policies_enabled  = try(each.value.private_link_service_network_policies_enabled, false)
+  settings                                       = each.value
+  # This attributes are going to be deprecated on azurerm provider v4 - keeping them for backward compatibility
   enforce_private_link_endpoint_network_policies = lookup(each.value, "enforce_private_link_endpoint_network_policies", false)
   enforce_private_link_service_network_policies  = lookup(each.value, "enforce_private_link_service_network_policies", false)
-  settings                                       = each.value
 }
 
 module "nsg" {
