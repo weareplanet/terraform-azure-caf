@@ -84,6 +84,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   lifecycle {
     ignore_changes = [
       private_dns_zone_id,
+      zone,
       tags
     ]
   }
