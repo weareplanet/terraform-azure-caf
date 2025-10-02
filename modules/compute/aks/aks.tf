@@ -71,6 +71,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                          = var.settings.default_node_pool.name # azurecaf_name.default_node_pool.result
     vm_size                       = var.settings.default_node_pool.vm_size
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
     capacity_reservation_group_id = try(var.settings.default_node_pool.capacity_reservation_group_id, null) # TODO(aferri): optionally get it from remote lz
     custom_ca_trust_enabled       = try(var.settings.default_node_pool.custom_ca_trust_enabled, null)
     enable_auto_scaling           = try(var.settings.default_node_pool.enable_auto_scaling, false)
