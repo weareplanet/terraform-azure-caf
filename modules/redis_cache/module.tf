@@ -33,16 +33,17 @@ resource "azurerm_redis_cache" "redis" {
     for_each = lookup(var.redis, "redis_configuration", {}) != {} ? [var.redis.redis_configuration] : []
 
     content {
-      enable_authentication           = lookup(redis_configuration.value, "enable_authentication", null)
-      maxmemory_reserved              = lookup(redis_configuration.value, "maxmemory_reserved", null)
-      maxmemory_delta                 = lookup(redis_configuration.value, "maxmemory_delta", null)
-      maxmemory_policy                = lookup(redis_configuration.value, "maxmemory_policy", null)
-      maxfragmentationmemory_reserved = lookup(redis_configuration.value, "maxfragmentationmemory_reserved", null)
-      rdb_backup_enabled              = lookup(redis_configuration.value, "rdb_backup_enabled", null)
-      rdb_backup_frequency            = lookup(redis_configuration.value, "rdb_backup_frequency", null)
-      rdb_backup_max_snapshot_count   = lookup(redis_configuration.value, "rdb_backup_max_snapshot_count", null)
-      rdb_storage_connection_string   = lookup(redis_configuration.value, "rdb_storage_connection_string", null)
-      notify_keyspace_events          = lookup(redis_configuration.value, "notify_keyspace_events", null)
+      active_directory_authentication_enabled = lookup(redis_configuration.value, "active_directory_authentication_enabled", null) 
+      enable_authentication                   = lookup(redis_configuration.value, "enable_authentication", null)
+      maxmemory_reserved                      = lookup(redis_configuration.value, "maxmemory_reserved", null)
+      maxmemory_delta                         = lookup(redis_configuration.value, "maxmemory_delta", null)
+      maxmemory_policy                        = lookup(redis_configuration.value, "maxmemory_policy", null)
+      maxfragmentationmemory_reserved         = lookup(redis_configuration.value, "maxfragmentationmemory_reserved", null)
+      rdb_backup_enabled                      = lookup(redis_configuration.value, "rdb_backup_enabled", null)
+      rdb_backup_frequency                    = lookup(redis_configuration.value, "rdb_backup_frequency", null)
+      rdb_backup_max_snapshot_count           = lookup(redis_configuration.value, "rdb_backup_max_snapshot_count", null)
+      rdb_storage_connection_string           = lookup(redis_configuration.value, "rdb_storage_connection_string", null)
+      notify_keyspace_events                  = lookup(redis_configuration.value, "notify_keyspace_events", null)
     }
   }
 
