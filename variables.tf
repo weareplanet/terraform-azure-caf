@@ -476,3 +476,8 @@ variable "iot" {
 variable "resource_provider_registration" {
   default = {}
 }
+variable "cdn_frontdoor_profiles" {
+  description = "Optional top-level cdn_frontdoor_profiles for backward compatibility"
+  type        = any
+  default     = {}
+}

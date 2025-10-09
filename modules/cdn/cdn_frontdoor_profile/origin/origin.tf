@@ -11,6 +11,7 @@ resource "azurerm_cdn_frontdoor_origin" "origin" {
   )
   host_name = coalesce(
     try(var.settings.host_name, null),
+    try(var.remote_objects.app_services[try(var.settings.app_service.lz_key, var.client_config.landingzone_key)][var.settings.app_service.key].default_hostname, null),
     try(var.remote_objects.storage_accounts[try(var.settings.storage_account.lz_key, var.client_config.landingzone_key)][var.settings.storage_account.key].primary_web_host, null),
     try(var.remote_objects.storage_accounts[var.client_config.landingzone_key][var.settings.storage_account.key].primary_web_host, null)
   )
@@ -20,6 +21,7 @@ resource "azurerm_cdn_frontdoor_origin" "origin" {
   https_port                     = try(var.settings.https_port, 443)
   origin_host_header = coalesce(
     try(var.settings.origin_host_header, null),
+    try(var.remote_objects.app_services[try(var.settings.app_service.lz_key, var.client_config.landingzone_key)][var.settings.app_service.key].default_hostname, null),
     try(var.remote_objects.storage_accounts[try(var.settings.storage_account.lz_key, var.client_config.landingzone_key)][var.settings.storage_account.key].primary_web_host, null),
     try(var.remote_objects.storage_accounts[var.client_config.landingzone_key][var.settings.storage_account.key].primary_web_host, null)
   )

@@ -14,6 +14,7 @@ module "cdn_frontdoor_profiles" {
     keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
     managed_identities            = local.combined_objects_managed_identities
     storage_accounts              = local.combined_objects_storage_accounts
+    app_services                 = local.combined_objects_app_services
   }
 }
 

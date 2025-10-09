@@ -17,7 +17,13 @@ resource "azurerm_cdn_frontdoor_route" "route" {
     try(var.settings.cdn_frontdoor_origin_ids, null),
     try([
       for origin_key in try(var.settings.origin_ids, []) :
-      var.remote_objects.cdn_frontdoor_origins[origin_key].id
+      // support two shapes for origin_key:
+      // - simple string key referencing local.remote_objects.cdn_frontdoor_origins["key"]
+      // - object with { lz_key = "...", key = "..." }
+      can(origin_key.key) ?
+        try(var.remote_objects.cdn_frontdoor_origins[try(origin_key.lz_key, var.client_config.landingzone_key)][origin_key.key].id, null) :
+        // for plain string keys try namespaced map first, then flat map
+        try(var.remote_objects.cdn_frontdoor_origins[var.client_config.landingzone_key][origin_key].id, try(var.remote_objects.cdn_frontdoor_origins[origin_key].id, null))
     ], null)
   )
   patterns_to_match   = var.settings.patterns_to_match
