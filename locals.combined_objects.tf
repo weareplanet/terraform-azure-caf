@@ -38,6 +38,7 @@ locals {
   combined_objects_batch_certificates                             = merge(tomap({ (local.client_config.landingzone_key) = module.batch_certificates }), try(var.remote_objects.batch_certificates, {}))
   combined_objects_batch_jobs                                     = merge(tomap({ (local.client_config.landingzone_key) = module.batch_jobs }), try(var.remote_objects.batch_jobs, {}))
   combined_objects_batch_pools                                    = merge(tomap({ (local.client_config.landingzone_key) = module.batch_pools }), try(var.remote_objects.batch_pools, {}))
+  combined_objects_cdn_frontdoor_profiles                         = merge(tomap({ (local.client_config.landingzone_key) = module.cdn_frontdoor_profiles }), lookup(var.remote_objects, "cdn_frontdoor_profiles", {}), lookup(var.data_sources, "cdn_frontdoor_profiles", {}))
   combined_objects_cdn_profile                                    = merge(tomap({ (local.client_config.landingzone_key) = module.cdn_profile }), try(var.remote_objects.cdn_profile, {}))
   combined_objects_cognitive_services_accounts                    = merge(tomap({ (local.client_config.landingzone_key) = module.cognitive_services_account }), try(var.remote_objects.cognitive_services_account, {}))
   combined_objects_search_services                                = merge(tomap({ (local.client_config.landingzone_key) = module.search_service }), try(var.remote_objects.search_services, {}), try(var.data_sources.search_services, {}))

@@ -23,6 +23,11 @@ locals {
     azuread_users                       = try(var.azuread.azuread_users, {})
   }
 
+  cdn = {
+    cdn_frontdoor_profiles = try(var.cdn.cdn_frontdoor_profiles, try(var.cdn_frontdoor_profiles, {}))
+  }
+
+
   client_config = var.client_config == {} ? {
     client_id               = data.azuread_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
