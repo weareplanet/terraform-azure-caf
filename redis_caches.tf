@@ -17,6 +17,8 @@ module "redis_caches" {
   private_endpoints   = try(each.value.private_endpoints, {})
   vnets               = local.combined_objects_networking
   private_dns         = local.combined_objects_private_dns
+  managed_identities  = local.combined_objects_managed_identities
+  access_policy_assignments = try(each.value.access_policy_assignments, {})
 }
 
 output "redis_caches" {
