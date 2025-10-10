@@ -48,3 +48,13 @@ variable "private_dns" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
+
+variable "access_policy_assignments" {
+  description = "Map of access policy assignments to grant on the Redis cache. Key is the assignment name. Each value should include access_policy_name, object_id, and optional object_id_alias."
+  default     = {}
+}
+
+variable "managed_identities" {
+  description = "Combined objects map of managed identities to resolve principal IDs when a managed_identity_key is provided in access_policy_assignments."
+  default     = {}
+}
