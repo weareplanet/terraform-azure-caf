@@ -504,7 +504,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   for_each = try(var.settings.node_pools, {})
 
   name                          = each.value.name
-  temporary_name_for_rotation   = try(each.value.temporary_name_for_rotation, null)
   kubernetes_cluster_id         = azurerm_kubernetes_cluster.aks.id
   vm_size                       = each.value.vm_size
   capacity_reservation_group_id = try(each.value.capacity_reservation_group_id, null)
