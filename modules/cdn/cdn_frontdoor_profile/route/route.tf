@@ -59,4 +59,8 @@ resource "azurerm_cdn_frontdoor_route" "route" {
       delete = try(timeouts.value.delete, null)
     }
   }
+
+  lifecycle {
+    ignore_changes = [cdn_frontdoor_custom_domain_ids]
+  }
 }
