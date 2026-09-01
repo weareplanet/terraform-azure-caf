@@ -32,15 +32,6 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
 
     content {
       category = enabled_log.value.0
-
-      dynamic "retention_policy" {
-        for_each = length(enabled_log.value) > 2 ? [1] : []
-
-        content {
-          enabled = try(enabled_log.value.2, false)
-          days    = try(enabled_log.value.3, 0)
-        }
-      }
     }
   }
 
@@ -50,14 +41,6 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
     content {
       category = metric.value.0
       enabled  = metric.value.1
-
-      dynamic "retention_policy" {
-        for_each = length(metric.value) > 2 ? [1] : []
-        content {
-          enabled = metric.value.2
-          days    = metric.value.3
-        }
-      }
     }
   }
 
